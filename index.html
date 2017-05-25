@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+    <head>
+        <title> AngularJS + Leaflet </title>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' />
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+		<link rel='stylesheet' href='css/style.css' />
+    </head>
+    <body>
+        <div class='container' ng-controller="MapCtrl">
+            <div class='row'>
+			    <div class='col-sm-3'>
+				<h2>Select places to show:</h2> 
+				<ul ng-repeat="(key, value) in tree">
+				  <li ng-click="selectMultiplePoints($event, value)">{{key}}
+				    <ul ng-repeat="(subkey, subvalue) in value">
+					  <li ng-click="selectMultiplePoints($event, subvalue)">{{subkey}}
+					     <ul ng-repeat="place in subvalue">
+						   <li ng-click="selectPoint($event, place)" ng-class="{true:'active', false:''}[place.active]">{{place.name}}</li>
+						 </ul>
+					  </li>
+					</ul>
+				  </li>
+				</ul>
+				</div>
+				
+                <div class='col-sm-6'>
+				  
+                     <map id="map" pointsource="placesToShow"></map>
+                  
+				</div>
+				
+				<div class='col-sm-3'>
+				  <h2>Selected places:</h2>
+				  
+				    <div class="selected-place" ng-repeat="item in selected">
+					   <button ng-click="removeFromSelected($index)">&times;</button>{{item.name}} {{item.lat}} {{item.lng}}
+					</div>
+				  
+				</div>
+            </div>
+        </div>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.11/angular.min.js'></script>
+		<script src="//cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+		<script src='src/bouncemarker.js'></script>
+        <script src='src/app.js'></script>
+    </body>
+</html>
